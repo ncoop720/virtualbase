@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <h1>Home Page</h1>
-      <Nav selected='Home' />
+      <Nav selected={1} />
     </>
   )
 }

@@ -4,7 +4,7 @@ export default function Apps() {
   return (
     <>
       <h1>Apps Page</h1>
-      <Nav selected='Apps' />
+      <Nav selected={0} />
     </>
   )
 }

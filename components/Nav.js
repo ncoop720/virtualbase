@@ -1,46 +1,35 @@
-import Link from 'next/link'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import styles from '../styles/Nav.module.css'
-import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import AppsTwoToneIcon from '@material-ui/icons/AppsTwoTone'
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone'
+import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone'
 import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone'
 
-const iconStyles = { fontSize: 'calc(6vh + 3vw)' }
-const highlightedStyles = { ...iconStyles, color: 'red' }
+export default function Nav({ selected }) {
+  const [value, setValue] = useState(selected);
+  const router = useRouter()
 
-const Nav = ({ selected }) => {
+  const goTo = (href) => {
+    return (e) => {
+      e.preventDefault()
+      router.push(href)
+    }
+  }
+
   return (
-    <div className={styles.container}>
-      <Link href="/apps">
-        <a>
-          <AppsTwoToneIcon 
-            style={selected === 'Apps' ? highlightedStyles : iconStyles }
-          />
-        </a>
-      </Link>
-      <Link href="/">
-        <a>
-          <HomeTwoToneIcon
-            style={selected === 'Home' ? highlightedStyles : iconStyles }
-          />
-        </a>
-      </Link>
-      <Link href="/profile">
-        <a>
-          <AccountCircleTwoToneIcon
-            style={selected === 'AccountCircle' ? highlightedStyles : iconStyles }
-          />
-        </a>
-      </Link>
-      <Link href="/settings">
-        <a>
-          <SettingsTwoToneIcon 
-            style={selected === 'Settings' ? highlightedStyles : iconStyles }
-          />
-        </a>
-      </Link>
-    </div>
-  )
+    <BottomNavigation
+      value={value}
+      onChange={(event, newValue) => setValue(newValue)}
+      showLabels
+      className={styles.container}
+    >
+      <BottomNavigationAction label="Apps" icon={<AppsTwoToneIcon />} onClick={goTo('/apps')} />
+      <BottomNavigationAction label="Home" icon={<HomeTwoToneIcon />} onClick={goTo('/')} />
+      <BottomNavigationAction label="Profile" icon={<AccountCircleTwoToneIcon />} onClick={goTo('/profile')} />
+      <BottomNavigationAction label="Settings" icon={<SettingsTwoToneIcon />} onClick={goTo('/settings')} />
+    </BottomNavigation>
+  );
 }
-
-export default Nav
